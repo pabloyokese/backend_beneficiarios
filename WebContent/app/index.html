@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>My AngularJS App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script data-require="bootstrap@3.1.1" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+        <link rel="stylesheet" href="app.css">
+        <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body ng-controller="listaController">
+        <div class="container">   
+            <form class="form-inline">
+                <div class="form-group">
+                    <label >Busqueda: </label>
+                    <input class="form-control" type="text" placeholder="Busqueda por Apellido" ng-model="apellido">
+                </div>
+                <div class="form-group">
+                    <label >Filas por pagina: </label>
+                    <input class="form-control" type="number" ng-model="beneficiariosPerPage">
+                </div>
+                <button class="btn btn-default" type="button" ng-click="buscarBeneficiarios()">Buscar</button>    
+            </form>
+            <hr/>
+            <div ng-show="verificar()">
+                Se encontraron {{totalBeneficiarios}} beneficiarios.
+                <table class="table table-hover">
+                    <caption>Beneficiarios</caption>
+                    <thead>
+                        <tr>
+                            <th>Nro de fila </th>
+                            <th>Id Beneficiario</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="beneficiario in beneficiarios | itemsPerPage: beneficiariosPerPage " total-items="totalBeneficiarios">
+                            <td>{{ beneficiario.registro}}</td>
+                            <td>{{ beneficiario.idBeneficiario}}</td>
+                            <td>{{ beneficiario.nombre}}</td>
+                            <td>{{ beneficiario.apellido}}</td>
+                        </tr>
+                    </tbody>
+                </table> 
+                <div class="text-center">
+                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url="dirPagination.tpl.html"></dir-pagination-controls>  
+                </div>
+            </div>
+        </div>
+        <!-- In production use:
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+        -->
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="dirPagination.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
